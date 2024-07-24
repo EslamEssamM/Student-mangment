@@ -1,0 +1,41 @@
+﻿@page
+@model Student_mangment.Pages.ContactModel
+@{
+    ViewData["Title"] = "Student Information Management Form";
+}
+
+<h2 class="text-center mt-4">@ViewData["Title"]</h2>
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger">@Model.ErrorMessage</div>
+}
+
+@if (!string.IsNullOrEmpty(Model.SuccessMessage))
+{
+    <div class="alert alert-success">@Model.SuccessMessage</div>
+}
+
+<form method="post" enctype="multipart/form-data" class="container mt-4">
+    <div class="form-group">
+        <label for="Email">From Email:</label>
+        <input type="email" id="Email" name="Contact.Email" class="form-control" value="@Model.Contact?.Email" />
+        <span asp-validation-for="Contact.Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Subject">Subject:</label>
+        <input type="text" id="Subject" name="Contact.Subject" class="form-control" value="@Model.Contact?.Subject" />
+        <span asp-validation-for="Contact.Subject" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="UploadedFile">File Attachment:</label>
+        <input type="file" id="UploadedFile" name="UploadedFile" class="form-control-file" />
+        <span asp-validation-for="UploadedFile" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Message">Message:</label>
+        <textarea id="Message" name="Contact.Message" class="form-control">@Model.Contact?.Message</textarea>
+        <span asp-validation-for="Contact.Message" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Send</button>
+</form>

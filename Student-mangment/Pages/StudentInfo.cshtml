@@ -1,0 +1,102 @@
+﻿@page
+@model Student_mangment.Pages.StudentInfoModel
+@{
+    ViewData["Title"] = "Student Information Management Form";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div style="color: red;">@Model.ErrorMessage</div>
+}
+
+<form method="post" style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px;">
+    <div style="margin-bottom: 15px;">
+        <label for="StudentID" style="display: block; margin-bottom: 5px;">Student ID:</label>
+        <input type="text" id="StudentID" name="StudentID" value="@Model.StudentID" style="width: 100%; padding: 8px; box-sizing: border-box;" />
+        <span asp-validation-for="StudentID" class="text-danger"></span>
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="StudentName" style="display: block; margin-bottom: 5px;">Student Name:</label>
+        <input type="text" id="StudentName" name="StudentName" value="@Model.StudentName" style="width: 100%; padding: 8px; box-sizing: border-box;" />
+        <span asp-validation-for="StudentName" class="text-danger"></span>
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="Address" style="display: block; margin-bottom: 5px;">Address:</label>
+        <select id="Address" name="Address" style="width: 100%; padding: 8px; box-sizing: border-box;">
+            <option value="KSA" selected="@(Model.Address == "KSA" ? "selected" : null)">KSA</option>
+            <option value="UK" selected="@(Model.Address == "UK" ? "selected" : null)">UK</option>
+            <option value="USA" selected="@(Model.Address == "USA" ? "selected" : null)">USA</option>
+            <option value="Canada" selected="@(Model.Address == "Canada" ? "selected" : null)">Canada</option>
+        </select>
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="Age" style="display: block; margin-bottom: 5px;">Age:</label>
+        <input type="text" id="Age" name="Age" value="@Model.Age" style="width: 100%; padding: 8px; box-sizing: border-box;" />
+        <span asp-validation-for="Age" class="text-danger"></span>
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="PhoneNo" style="display: block; margin-bottom: 5px;">Phone No:</label>
+        <input type="text" id="PhoneNo" name="PhoneNo" value="@Model.PhoneNo" style="width: 100%; padding: 8px; box-sizing: border-box;" />
+        <span asp-validation-for="PhoneNo" class="text-danger"></span>
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label>Gender:</label>
+        <div>
+            <input type="radio" id="Female" name="Gender" value="Female" checked="@(Model.Gender == "Female" ? "checked" : null)" />
+            <label for="Female">Female</label>
+            <input type="radio" id="Male" name="Gender" value="Male" checked="@(Model.Gender == "Male" ? "checked" : null)" />
+            <label for="Male">Male</label>
+        </div>
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label>Skills:</label>
+        <div>
+            <input type="checkbox" id="CSharp" name="Skills" value="C#" @(Model.Skills.Contains("C#") ? "checked" : "") />
+            <label for="CSharp">C#</label>
+            <input type="checkbox" id="JavaScript" name="Skills" value="JavaScript" @(Model.Skills.Contains("JavaScript") ? "checked" : "") />
+            <label for="JavaScript">JavaScript</label>
+            <input type="checkbox" id="Python" name="Skills" value="Python" @(Model.Skills.Contains("Python") ? "checked" : "") />
+            <label for="Python">Python</label>
+            <input type="checkbox" id="PHP" name="Skills" value="PHP" @(Model.Skills.Contains("PHP") ? "checked" : "") />
+            <label for="PHP">PHP</label>
+        </div>
+    </div>
+    <div style="text-align: center;">
+        <button type="submit" style="margin: 5px; padding: 10px 20px;">Insert</button>
+        <button type="submit" formaction="?handler=Update" style="margin: 5px; padding: 10px 20px;">Update</button>
+        <button type="submit" formaction="?handler=Delete" style="margin: 5px; padding: 10px 20px;">Delete</button>
+        <button type="submit" formaction="?handler=Select" style="margin: 5px; padding: 10px 20px;">Select</button>
+        <button type="submit" formaction="?handler=Export" style="margin: 5px; padding: 10px 20px;">Export To Excel</button>
+    </div>
+</form>
+
+<table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+    <thead>
+        <tr style="background-color: #f2f2f2;">
+            <th style="border: 1px solid #ddd; padding: 8px;">Student ID</th>
+            <th style="border: 1px solid #ddd; padding: 8px;">Student Name</th>
+            <th style="border: 1px solid #ddd; padding: 8px;">Address</th>
+            <th style="border: 1px solid #ddd; padding: 8px;">Age</th>
+            <th style="border: 1px solid #ddd; padding: 8px;">Phone No</th>
+            <th style="border: 1px solid #ddd; padding: 8px;">Gender</th>
+            <th style="border: 1px solid #ddd; padding: 8px;">Skills</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model.Students)
+        {
+            <tr>
+                <td style="border: 1px solid #ddd; padding: 8px;">@student.StudentID</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">@student.StudentName</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">@student.Address</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">@student.Age</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">@student.PhoneNo</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">@student.Gender</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">@student.Skills</td>
+            </tr>
+        }
+    </tbody>
+</table>
